@@ -21,7 +21,6 @@ class BookListAPIView(APIView):
         return Response(serializer.data)
 
 class BookCreateAPIView(APIView):
-    permission_classes = [permissions.IsAdminUser]
     
     def post(self, request):
         serializer = BookCreateSerializer(data=request.data)
@@ -45,7 +44,6 @@ class BookDetailAPIView(APIView):
 
 
 class BookUpdateDeleteAPIView(APIView):
-    permission_classes = [permissions.IsAdminUser]
     
     def get_object(self, id):
         try:
