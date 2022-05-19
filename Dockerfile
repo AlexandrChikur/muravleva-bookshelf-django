@@ -19,16 +19,16 @@ RUN apt-get update \
     && poetry config virtualenvs.in-project true
 
 WORKDIR /bookshelf
-COPY ./scripts /scripts
+COPY ./docker /docker
 COPY ./poetry.lock ./pyproject.toml /bookshelf/
 
 RUN poetry install --no-dev
 
-RUN chmod +x /scripts/*
+RUN chmod +x /docker/*
 
-RUN dos2unix /scripts/entrypoint.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*
+RUN dos2unix /docker/entrypoint.sh && apt-get --purge remove -y dos2unix && rm -rf /var/lib/apt/lists/*
 RUN useradd -ms /bin/bash bsuser
 USER bsuser
-CMD ["bash", "/scripts/entrypoint.sh"]
+CMD ["bash", "/docker/entrypoint.sh"]
 
 COPY . /bookshelf
